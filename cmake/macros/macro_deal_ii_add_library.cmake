@@ -33,8 +33,11 @@ MACRO(DEAL_II_ADD_LIBRARY _library)
   FOREACH(_build ${DEAL_II_BUILD_TYPES})
     STRING(TOLOWER ${_build} _build_lowercase)
 
+    CUDA_WRAP_SRCS(${_library}.${_build_lowcase} OBJ _generated_cuda_files ${ARGN})
+
     ADD_LIBRARY(${_library}.${_build_lowercase}
       ${ARGN}
+       #"${_generated_cuda_files}"
       )
 
     SET_TARGET_PROPERTIES(${_library}.${_build_lowercase} PROPERTIES
@@ -46,6 +49,7 @@ MACRO(DEAL_II_ADD_LIBRARY _library)
 
     SET_PROPERTY(GLOBAL APPEND PROPERTY DEAL_II_OBJECTS_${_build}
       "$<TARGET_OBJECTS:${_library}.${_build_lowercase}>"
+       #"${_generated_cuda_files}"
       )
   ENDFOREACH()
 
