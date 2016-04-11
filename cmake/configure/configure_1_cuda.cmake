@@ -1,6 +1,6 @@
 ## ---------------------------------------------------------------------
 ##
-## Copyright (C) 2012 - 2015 by the deal.II authors
+## Copyright (C) 2012 - 2016 by the deal.II authors
 ##
 ## This file is part of the deal.II library.
 ##
@@ -22,8 +22,8 @@ MACRO(FEATURE_CUDA_FIND_EXTERNAL var)
 
   IF(CUDA_FOUND)
     SET(${var} TRUE)
-
   ENDIF()
+
 ENDMACRO()
 
 MACRO(FEATURE_CUDA_ERROR_MESSAGE)
