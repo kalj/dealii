@@ -35,7 +35,6 @@ MACRO(DEAL_II_ADD_LIBRARY _library)
 
     ADD_LIBRARY(${_library}.${_build_lowercase}
       ${ARGN}
-       #"${_generated_cuda_files}"
       )
 
     SET_TARGET_PROPERTIES(${_library}.${_build_lowercase} PROPERTIES
