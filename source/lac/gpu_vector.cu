@@ -1,4 +1,4 @@
-
+#include <deal.II/lac/gpu_vector.h>
 
 
 DEAL_II_NAMESPACE_OPEN
@@ -18,7 +18,7 @@ void GpuVector::foo()
 {
   float *x;
 
-  foo_kernel<<<1,1>>> foo_kernel(x);
+  foo_kernel<<<1,1>>>(x);
 }
 
 DEAL_II_NAMESPACE_CLOSE
