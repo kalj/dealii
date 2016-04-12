@@ -1,6 +1,6 @@
 ## ---------------------------------------------------------------------
 ##
-## Copyright (C) 2012 - 2015 by the deal.II authors
+## Copyright (C) 2012 - 2016 by the deal.II authors
 ##
 ## This file is part of the deal.II library.
 ##
@@ -33,11 +33,8 @@ MACRO(DEAL_II_ADD_LIBRARY _library)
   FOREACH(_build ${DEAL_II_BUILD_TYPES})
     STRING(TOLOWER ${_build} _build_lowercase)
 
-    CUDA_WRAP_SRCS(${_library}.${_build_lowcase} OBJ _generated_cuda_files ${ARGN})
-
     ADD_LIBRARY(${_library}.${_build_lowercase}
       ${ARGN}
-       #"${_generated_cuda_files}"
       )
 
     SET_TARGET_PROPERTIES(${_library}.${_build_lowercase} PROPERTIES
@@ -47,10 +44,15 @@ MACRO(DEAL_II_ADD_LIBRARY _library)
       LINKER_LANGUAGE "CXX"
       )
 
-    SET_PROPERTY(GLOBAL APPEND PROPERTY DEAL_II_OBJECTS_${_build}
-      "$<TARGET_OBJECTS:${_library}.${_build_lowercase}>"
-       #"${_generated_cuda_files}"
-      )
+    IF(DEAL_II_WITH_CUDA)
+      CUDA_WRAP_SRCS(${DEAL_II_BASE_NAME}${DEAL_II_${_build}_SUFFIX} OBJ _generated_cuda_files ${ARGN})
+
+      SET_PROPERTY(GLOBAL APPEND PROPERTY DEAL_II_OBJECTS_${_build}
+        "$<TARGET_OBJECTS:${_library}.${_build_lowercase}>"
+        "${_generated_cuda_files}"
+        )
+    ENDIF()
+
   ENDFOREACH()
 
 ENDMACRO()
