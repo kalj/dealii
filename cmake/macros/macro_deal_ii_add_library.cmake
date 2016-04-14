@@ -45,7 +45,7 @@ MACRO(DEAL_II_ADD_LIBRARY _library)
       )
 
     IF(DEAL_II_WITH_CUDA)
-      CUDA_WRAP_SRCS(${DEAL_II_BASE_NAME}${DEAL_II_${_build}_SUFFIX} OBJ _generated_cuda_files ${ARGN})
+      CUDA_WRAP_SRCS(${DEAL_II_BASE_NAME}${DEAL_II_${_build}_SUFFIX} OBJ _generated_cuda_files ${ARGN} SHARED)
 
       SET_PROPERTY(GLOBAL APPEND PROPERTY DEAL_II_OBJECTS_${_build}
         "$<TARGET_OBJECTS:${_library}.${_build_lowercase}>"
