@@ -45,7 +45,36 @@ MACRO(DEAL_II_INVOKE_AUTOPILOT)
   ENDIF()
 
   # Define and setup a compilation target:
-  ADD_EXECUTABLE(${TARGET} ${TARGET_SRC})
+  IF(DEAL_II_WITH_CUDA)
+    FIND_PACKAGE(CUDA)
+    IF(NOT CUDA_FOUND)
+      MESSAGE(FATAL_ERROR "\n"
+        "Could not find any suitable cuda library!\n"
+        "\nPlease ensure that a cuda library is installed on your computer\n"
+        )
+    ENDIF()
+
+
+    CUDA_ADD_CUDA_INCLUDE_ONCE()
+    CUDA_WRAP_SRCS( ${TARGET} OBJ generated_cuda_files ${TARGET_SRC})
+
+    FOREACH(f ${generated_cuda_files})
+      SET_PROPERTY(TARGET ${f} APPEND PROPERTY
+        INCLUDE_DIRECTORIES "${DEAL_II_INCLUDE_DIRS}"
+        )
+
+    ENDFOREACH()
+
+  ENDIF()
+
+  ADD_EXECUTABLE(${TARGET} ${TARGET_SRC} ${generated_cuda_files})
+
+  IF(DEAL_II_WITH_CUDA)
+    target_link_libraries(${TARGET}
+      ${CUDA_LIBRARIES}
+      )
+  ENDIF()
+
   DEAL_II_SETUP_TARGET(${TARGET})
 
   MESSAGE(STATUS "Autopilot invoked")
@@ -237,4 +266,3 @@ ${_switch_targets}#
   ENDIF()
 
 ENDMACRO()
-
