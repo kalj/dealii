@@ -6,9 +6,14 @@
 DEAL_II_NAMESPACE_OPEN
 
 class GpuVector {
+private:
+  int N;
+  float *x;
 public:
-  GpuVector();
+  GpuVector(int N);
+  ~GpuVector();
   void foo();
+  void hello();
 };
 
 
