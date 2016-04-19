@@ -29,17 +29,8 @@ ENDMACRO()
 MACRO(FEATURE_CUDA_ERROR_MESSAGE)
   MESSAGE(FATAL_ERROR "\n"
     "Could not find any suitable cuda library!\n"
-    # ${CUDA_ADDITIONAL_ERROR_STRING}
-    # "\nPlease ensure that a cuda library is installed on your computer\n"
-    # "and set CMAKE_CXX_COMPILER to the appropriate mpi wrappers:\n"
-    # "    $ CXX=\".../mpicxx\" cmake <...>\n"
-    # "    $ cmake -DCMAKE_CXX_COMPILER=\".../mpicxx\" <...>\n"
-    # "Or with additional C and Fortran wrappers (recommended!):\n"
-    # "    $ CC=\".../mpicc\" CXX=\".../mpicxx\" F90=\".../mpif90\" cmake <...>\n"
-    # "    $ cmake -DCMAKE_C_COMPILER=\".../mpicc\"\\\n"
-    # "            -DCMAKE_CXX_COMPILER=\".../mpicxx\"\\\n"
-    # "            -DCMAKE_Fortran_COMPILER=\".../mpif90\"\\\n"
-    # "            <...>\n"
+    ${CUDA_ADDITIONAL_ERROR_STRING}
+    "\nPlease ensure that a cuda library is installed on your computer\n"
     )
 ENDMACRO()
 
