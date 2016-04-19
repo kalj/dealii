@@ -51,6 +51,10 @@ MACRO(DEAL_II_ADD_LIBRARY _library)
         "$<TARGET_OBJECTS:${_library}.${_build_lowercase}>"
         "${_generated_cuda_files}"
         )
+    ELSE()
+      SET_PROPERTY(GLOBAL APPEND PROPERTY DEAL_II_OBJECTS_${_build}
+        "$<TARGET_OBJECTS:${_library}.${_build_lowercase}>"
+        )
     ENDIF()
 
   ENDFOREACH()
