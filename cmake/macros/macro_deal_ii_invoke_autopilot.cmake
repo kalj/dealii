@@ -37,7 +37,7 @@
 
 MACRO(DEAL_II_INVOKE_AUTOPILOT)
 
-  # Set CMAKE_BUILD_TYPE=Debug if both
+  # Set CMAKE_BUILD_TYPE=Debug if both 
   # Debug and Release mode are given
   IF("${CMAKE_BUILD_TYPE}" STREQUAL "DebugRelease")
     SET(CMAKE_BUILD_TYPE "Debug" CACHE STRING
@@ -54,11 +54,7 @@ MACRO(DEAL_II_INVOKE_AUTOPILOT)
   ENDIF()
 
   # Define and setup a compilation target:
-  IF(DEAL_II_WITH_CUDA)
-    CUDA_ADD_EXECUTABLE(${TARGET} ${TARGET_SRC})
-  ELSE()
-    ADD_EXECUTABLE(${TARGET} ${TARGET_SRC})
-  ENDIF()
+  ADD_EXECUTABLE(${TARGET} ${TARGET_SRC})
   DEAL_II_SETUP_TARGET(${TARGET})
 
   MESSAGE(STATUS "Autopilot invoked")
@@ -250,3 +246,4 @@ ${_switch_targets}#
   ENDIF()
 
 ENDMACRO()
+
