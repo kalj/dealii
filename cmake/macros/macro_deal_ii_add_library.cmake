@@ -44,16 +44,16 @@ MACRO(DEAL_II_ADD_LIBRARY _library)
       LINKER_LANGUAGE "CXX"
       )
 
-    IF(DEAL_II_WITH_CUDA)
-      CUDA_WRAP_SRCS(${DEAL_II_BASE_NAME}${DEAL_II_${_build}_SUFFIX} OBJ _generated_cuda_files ${ARGN} SHARED)
+    SET_PROPERTY(GLOBAL APPEND PROPERTY DEAL_II_OBJECTS_${_build}
+      "$<TARGET_OBJECTS:${_library}.${_build_lowercase}>"
+      )
 
-      SET_PROPERTY(GLOBAL APPEND PROPERTY DEAL_II_OBJECTS_${_build}
-        "$<TARGET_OBJECTS:${_library}.${_build_lowercase}>"
-        "${_generated_cuda_files}"
+    IF(DEAL_II_WITH_CUDA)
+      CUDA_WRAP_SRCS(${_library}.${_build_lowercase}
+        OBJ _generated_cuda_files ${ARGN} SHARED
         )
-    ELSE()
       SET_PROPERTY(GLOBAL APPEND PROPERTY DEAL_II_OBJECTS_${_build}
-        "$<TARGET_OBJECTS:${_library}.${_build_lowercase}>"
+        "${_generated_cuda_files}"
         )
     ENDIF()
 
