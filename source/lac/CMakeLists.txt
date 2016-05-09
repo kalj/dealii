@@ -26,6 +26,7 @@ SET(_src
   dynamic_sparsity_pattern.cc
   constraint_matrix.cc
   full_matrix.cc
+  gpu_vector.cu
   lapack_full_matrix.cc
   la_vector.cc
   matrix_lib.cc
