@@ -1130,6 +1130,29 @@ namespace StandardExceptions
 #define AssertIsFinite(number) Assert(dealii::numbers::is_finite(number), \
                                       dealii::ExcNumberNotFinite(std::complex<double>(number)))
 
+#ifdef DEAL_II_WITH_CUDA
+/**
+ * An assertion that checks that the error code produced by calling a CUDA
+ * routine is equal to cudaSuccess.
+ *
+ * @ingroup Exceptions
+ * @author Bruno Turcksin, 2016
+ */
+#define CudaAssert(error_code) Assert(error_code != cudaSuccess, \
+                                      dealii::ExcMessage(cudaGetErrorString(error_code)))
+
+/**
+ * An assertion that checks that the error code produced by calling a CUDA
+ * routine is equal to cudaSuccess.
+ *
+ * @ingroup Exceptions
+ * @author Bruno Turcksin, 2016
+ */
+#define CudaAssertThrow(error_code) AssertThrow(error_code != cudaSuccess, \
+                                                dealii::ExcMessage(cudaGetErrorString(error_code)))
+
+#endif
+
 using namespace StandardExceptions;
 
 DEAL_II_NAMESPACE_CLOSE
