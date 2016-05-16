@@ -38,11 +38,77 @@ namespace LinearAlgebra
     :
       n_elements(V.n_elements)
     {
+      // Allocate the memory
       cudaError_t error_code = cudaMalloc(&val, n_elements*sizeof(Number));
       CudaAssert(error_code);
+      // Copy the values.
       error_code = cudaMemcpy(val, V.val,n_elements*sizeof(Number),
           cudaMemcpyDeviceToDevice);
       CudaAssert(error_code);
+    }
+
+
+
+    template <typename Number>
+    Vector(const size_type n)
+    :
+      n_elements(n)
+    {
+      // Allocate the memory
+      cudaError_t error_code = cudaMalloc(&val, n_elements*sizeof(Number));
+      CudaAssert(error_code);
+    }
+
+
+
+    template <typename Number>
+    Vector<Number>::~Vector()
+    {
+      if (val != nullptr)
+      {
+        cudaError_t error_code = cudaFree(val);
+        CudaAssert(error_code);
+        val = nullptr;
+        n_elements = 0;
+      }
+    }
+
+
+
+    template <typename Number>
+    Vector<Number>::reinit(const size_type n,
+                           const bool      omit_zeroing_entries)
+    {
+      // Resize the underlying array if necessary
+      if (n == 0)
+      {
+        if (val != nullptr)
+        {
+          cudaError_t error_code = cudaFree(val);
+          CudaAssert(error_code);
+          val = nullptr;
+        }
+      }
+      else
+      {
+        if (n_element != n)
+        {
+          cudaError_t error_code = cudaFree(val);
+          CudaAssert(error_code);
+        }
+
+        cudaError_t error_code = cudaMalloc(&val, n_elements*sizeof(Number));
+        CudaAssert(error_code);
+      }
+      n_elements = n;
+
+      // If necessary set the elements to zero
+      if (omit_zeroing_entries == false)
+      {
+        cudaError_t error_code = cudaMemset(val, Number(),
+            n_elements*sizeof(Number));
+        CudaAssert(error_code);
+      }
     }
   }
 }

@@ -32,8 +32,13 @@ namespace dealii
   {
     namespace CUDAWrappers
     {
-      /** @addtogroup Vectors
-       *@{
+      /**
+       * This class implement vector using CUDA for use on Nvidia GPUs. This
+       * class is derived from the LinearAlgebra::VectorSpaceVector class.
+       *
+       * @ingroup CUDAWrappers
+       * @ingroup Vectors
+       * @author Karl Ljungkvist, Bruno Turcksin, 2016
        */
       template <typename Number>
       class Vector: public VectorSpaceVector<Number>
@@ -222,7 +227,6 @@ namespace dealii
          */
         size_type n_elements;
       };
-      /*@}*/
     }
   }
 
