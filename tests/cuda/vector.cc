@@ -13,31 +13,28 @@
 //
 // ---------------------------------------------------------------------
 
-#ifndef dealii__gpu_vector_h
-#define dealii__gpu_vector_h
-
-#include <deal.II/base/config.h>
-
-#ifdef DEAL_II_WITH_CUDA
-
-// includes...
-
-DEAL_II_NAMESPACE_OPEN
-
-class GpuVector {
-private:
-  int N;
-  float *x;
-public:
-  GpuVector(int N);
-  ~GpuVector();
-  void foo();
-  float hello();
-};
 
 
-DEAL_II_NAMESPACE_CLOSE
+#include "../tests.h"
+#include <deal.II/base/logstream.h>
+#include <deal.II/lac/gpu_vector.h>
+#include <cmath>
+#include <fstream>
+#include <iomanip>
 
-#endif    // DEAL_II_WITH_CUDA
+const unsigned int N=10;
 
-#endif    // dealii__gpu_vector_h
+int main()
+{
+  std::ofstream logfile("output");
+  deallog << std::fixed;
+  deallog << std::setprecision(2);
+  deallog.attach(logfile);
+  deallog.threshold_double(1.e-10);
+
+  GpuVector      v(N);
+
+  v.foo();
+  deallog << "x[0]="<<v.hello() << std::endl;
+
+}

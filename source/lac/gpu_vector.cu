@@ -47,11 +47,11 @@ void GpuVector::foo()
   foo_kernel<<<gd_dim,bk_dim>>>(this->x,this->N);
 }
 
-void GpuVector::hello()
+float GpuVector::hello()
 {
   float x_host;
   cudaMemcpy(&x_host,x,sizeof(float),cudaMemcpyDeviceToHost);
-  printf("x[0]=%g\n",x_host);
+  return x_host;
 }
 
 DEAL_II_NAMESPACE_CLOSE
