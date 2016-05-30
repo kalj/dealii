@@ -29,7 +29,7 @@ const unsigned int N=10;
 
 
 template <typename number>
-void print (const CUDAWrappers::Vector<number> &v)
+void print (const LinearAlgebra::CUDAWrappers::Vector<number> &v)
 {
 
   v.print(deallog);
@@ -38,10 +38,10 @@ void print (const CUDAWrappers::Vector<number> &v)
 
 
 template <typename number1>
-void check_vector (Vector<number1> &v1)
+void check_vector (LinearAlgebra::CUDAWrappers::Vector<number1> &v1)
 {
   deallog << "Fill & Swap" << std::endl;
-  CUDAWrappers::Vector<number1> v2(v1.size());
+  LinearAlgebra::CUDAWrappers::Vector<number1> v2(v1.size());
   print (v2);
 
   // initialize all entries to value
@@ -83,7 +83,7 @@ int main()
   deallog.attach(logfile);
   deallog.threshold_double(1.e-10);
 
-  CUDAWrappers::Vector<double>      v(N);
+  LinearAlgebra::CUDAWrappers::Vector<double>      v(N);
   // do the same for float...
 
   check_vector (v);

@@ -344,7 +344,7 @@ namespace LinearAlgebra
 
       // Downcast V. If fails, throws an exception.
       const Vector<Number> &down_V = dynamic_cast<const Vector<Number>&>(V);
-      Assert(down_V.size()==this->Size(),
+      Assert(down_V.size()==this->size(),
           ExcMessage("Cannot add two vectors with different numbers of elements"));
 
       const int n_blocks = 1 +
@@ -372,7 +372,7 @@ namespace LinearAlgebra
 
       // Downcast V. If fails, throws an exception.
       const Vector<Number> &down_V = dynamic_cast<const Vector<Number>&>(V);
-      Assert(down_V.size()==this->Size(),
+      Assert(down_V.size()==this->size(),
           ExcMessage("Cannot add two vectors with different numbers of elements"));
 
       const int n_blocks = 1 +
@@ -400,7 +400,7 @@ namespace LinearAlgebra
 
       // Downcast V. If fails, throws an exception.
       const Vector<Number> &down_V = dynamic_cast<const Vector<Number>&>(V);
-      Assert(down_V.size()==this->Size(),
+      Assert(down_V.size()==this->size(),
           ExcMessage("Cannot add two vectors with different numbers of elements"));
 
       Number* result_device;
@@ -424,6 +424,14 @@ namespace LinearAlgebra
 
       return result;
     }
+
+
+    template <typename Number>
+    size_t Vector<Number>::size () const
+    {
+      return n_elements;
+    }
+
   }
 }
 
